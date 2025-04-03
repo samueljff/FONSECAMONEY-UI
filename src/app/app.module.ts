@@ -1,5 +1,5 @@
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { TabViewModule } from 'primeng/tabview';
 import { AppComponent } from './app.component';
 import { InputTextModule } from 'primeng/inputtext';
@@ -10,6 +10,10 @@ import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos
 import { NavbarComponent } from './navbar/navbar.component';
 import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-cadastro.component';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { CalendarModule } from 'primeng/calendar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { DropdownModule } from 'primeng/dropdown';
 
 
 @NgModule({
@@ -20,13 +24,16 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     LancamentoCadastroComponent
   ],
   imports: [
-    BrowserModule,
     InputTextModule,
     ButtonModule,
     TabViewModule,
     TableModule,
     TooltipModule,
-    InputTextareaModule
+    InputTextareaModule,
+    CalendarModule,
+    BrowserAnimationsModule,
+    SelectButtonModule,
+    DropdownModule
   ],
   providers: [],
   bootstrap: [AppComponent]
