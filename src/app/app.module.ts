@@ -14,6 +14,9 @@ import { CalendarModule } from 'primeng/calendar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { DropdownModule } from 'primeng/dropdown';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { CadastroPessoaComponent } from './cadastro-pessoa/cadastro-pessoa.component';
+import { InputMaskModule } from 'primeng/inputmask'
 
 
 @NgModule({
@@ -21,7 +24,8 @@ import { DropdownModule } from 'primeng/dropdown';
     AppComponent,
     LancamentosPesquisaComponent,
     NavbarComponent,
-    LancamentoCadastroComponent
+    LancamentoCadastroComponent,
+    CadastroPessoaComponent
   ],
   imports: [
     InputTextModule,
@@ -33,7 +37,9 @@ import { DropdownModule } from 'primeng/dropdown';
     CalendarModule,
     BrowserAnimationsModule,
     SelectButtonModule,
-    DropdownModule
+    DropdownModule,
+    InputNumberModule,
+    InputMaskModule
   ],
   providers: [],
   bootstrap: [AppComponent]
