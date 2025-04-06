@@ -20,6 +20,9 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { FormsModule } from '@angular/forms';
 import { MessageModule } from 'primeng/message';
 import { MessageComponent } from './message/message.component';
+import { LancamentoGridComponent } from './lancamento-grid/lancamento-grid.component';
+import { PessoasGridComponent } from './pessoas-grid/pessoas-grid.component';
+import { PessoasPesquisaComponent } from './pessoas-pesquisa/pessoas-pesquisa.component';
 
 
 @NgModule({
@@ -29,7 +32,10 @@ import { MessageComponent } from './message/message.component';
     NavbarComponent,
     LancamentoCadastroComponent,
     CadastroPessoaComponent,
-    MessageComponent
+    MessageComponent,
+    LancamentoGridComponent,
+    PessoasGridComponent,
+    PessoasPesquisaComponent
   ],
   imports: [
     InputTextModule,
