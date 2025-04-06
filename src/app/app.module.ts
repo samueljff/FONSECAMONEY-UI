@@ -19,6 +19,7 @@ import { CadastroPessoaComponent } from './cadastro-pessoa/cadastro-pessoa.compo
 import { InputMaskModule } from 'primeng/inputmask';
 import { FormsModule } from '@angular/forms';
 import { MessageModule } from 'primeng/message';
+import { MessageComponent } from './message/message.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { MessageModule } from 'primeng/message';
     LancamentosPesquisaComponent,
     NavbarComponent,
     LancamentoCadastroComponent,
-    CadastroPessoaComponent
+    CadastroPessoaComponent,
+    MessageComponent
   ],
   imports: [
     InputTextModule,
