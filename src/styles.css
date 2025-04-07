@@ -59,7 +59,7 @@ a {
   padding: 10px;
 }
 
-.container-link-button{
+.container-link-button {
   display: flex; 
   align-items: center; 
   justify-content: start; 
@@ -90,9 +90,5 @@ a {
   .col-acoes {
     width: 115px;
     text-align: center !important;
-  }
-
-  .col-acoes .p-button {
-    margin: 1px;
   }
 }

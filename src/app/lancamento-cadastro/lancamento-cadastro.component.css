@@ -1,6 +1,6 @@
-.p-button {
-    margin-right: .25em
-  }
+form .p-button {
+  margin-right: 0.25em;
+}
 
   .no-resize {
     resize: none;
