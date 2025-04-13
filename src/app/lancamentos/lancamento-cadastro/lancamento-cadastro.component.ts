@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { RangeValueAccessor } from '@angular/forms';
 
 @Component({
   selector: 'app-lancamento-cadastro',
   templateUrl: './lancamento-cadastro.component.html',
   styleUrls: ['./lancamento-cadastro.component.css']
 })
-export class LancamentoCadastroComponent implements OnInit {
+export class LancamentoCadastroComponent {
 
   tipos = [
     {label: 'Receita', value: 'RECEITA'},
@@ -23,10 +22,5 @@ export class LancamentoCadastroComponent implements OnInit {
     { label: 'Sebastião Souza', value: 9 },
     { label: 'Maria Abadia', value: 3 },
   ];
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, Input, NgModule } from '@angular/core';
 
 @Component({
   selector: 'app-message',

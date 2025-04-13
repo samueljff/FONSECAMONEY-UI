@@ -1,0 +1,44 @@
+import { CadastroPessoaComponent } from "./cadastro-pessoa/cadastro-pessoa.component";
+import { PessoasGridComponent } from "./pessoas-grid/pessoas-grid.component";
+import { PessoasPesquisaComponent } from "./pessoas-pesquisa/pessoas-pesquisa.component";
+import { SharedModule } from "../shared/shared.module";
+
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { FormsModule } from "@angular/forms";
+
+import { InputTextModule } from "primeng/inputtext";
+import { ButtonModule } from "primeng/button";
+import { TableModule } from "primeng/table";
+import { TooltipModule } from "primeng/tooltip";
+import { CalendarModule } from "primeng/calendar";
+import { SelectButtonModule } from "primeng/selectbutton";
+import { DropdownModule } from "primeng/dropdown";
+import { InputNumberModule } from "primeng/inputnumber";
+import { InputMaskModule } from "primeng/inputmask";
+
+@NgModule({
+  declarations: [
+    CadastroPessoaComponent,
+    PessoasGridComponent,
+    PessoasPesquisaComponent,
+  ],
+  imports: [
+    CommonModule,
+    InputTextModule,
+    ButtonModule,
+    TableModule,
+    TooltipModule,
+    CalendarModule,
+    BrowserAnimationsModule,
+    InputMaskModule,
+    FormsModule,
+    SharedModule
+  ],
+  exports: [
+    CadastroPessoaComponent,
+    PessoasPesquisaComponent
+  ],
+})
+export class PessoasModule {}

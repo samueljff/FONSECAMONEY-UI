@@ -1,5 +1,5 @@
 <div class="container">
-    <form autocomplete="off">
+    <form #cadastroPessoaForm="ngForm" autocomplete="off">
         <div class="grid">
             <div class="col-12">
                 <h1>Nova Pessoa</h1>
@@ -52,7 +52,7 @@
                 <app-message [control]="estado" error="required" text="Informe o Estado!"></app-message>
             </div>
             <div class="col-12 container-link-button">
-                <button pButton type="submit" label="Salvar"></button>
+                <button pButton type="submit" label="Salvar" [disabled]="cadastroPessoaForm.invalid"></button>
                 <button pButton type="button" label="Novo" class="p-button-info"></button>
         
                 <a href="javascript:;">Voltar para a pesquisa</a>
