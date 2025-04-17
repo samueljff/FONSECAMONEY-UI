@@ -8,6 +8,7 @@ import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { ButtonModule } from "primeng/button";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { HttpClientModule } from '@angular/common/http';
 
 import { TabViewModule } from "primeng/tabview";
 import { TableModule } from "primeng/table";
@@ -28,7 +29,7 @@ import { InputNumberModule } from "primeng/inputnumber";
   ],
   exports: [
     LancamentoCadastroComponent, 
-    LancamentosPesquisaComponent
+    LancamentosPesquisaComponent,
   ],
   imports: [
     CommonModule,
