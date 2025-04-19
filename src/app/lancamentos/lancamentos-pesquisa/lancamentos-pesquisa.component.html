@@ -44,7 +44,9 @@
         [lazy]="true"
         [totalRecords]="totalRegistros"
         [responsive]="true"
-        (onLazyLoad)="aoMudarPagina($event)">
+        (onLazyLoad)="aoMudarPagina($event)"
+        [sortField]="'pessoa.nome'"
+        [sortOrder]="1">
         <ng-template pTemplate="header">
             <tr>
                 <th>Pessoa</th>

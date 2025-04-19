@@ -23,8 +23,8 @@ export class LancamentosPesquisaComponent implements OnInit {
   }
 
   pesquisar(pagina: number = 0): void {
-    this.filtro.pagina = pagina;
-    this.lancamentoService.pesquisar(this.filtro).then((resultado) => {
+      this.filtro.pagina = pagina;
+      this.lancamentoService.pesquisar(this.filtro).then((resultado) => {
       this.totalRegistros = resultado.total;
       this.lancamentos = resultado.lancamentos;
     });
@@ -32,6 +32,11 @@ export class LancamentosPesquisaComponent implements OnInit {
 
   aoMudarPagina(event: LazyLoadEvent) {
     const pagina = event!.first! / event!.rows!;
+     if (event.sortField) {
+      this.filtro.ordenarPor = event.sortField;
+      this.filtro.ordenacao = event.sortOrder === 1 ? 'asc' : 'desc';
+      console.log(event);
+    }
     this.pesquisar(pagina);
   }
 }

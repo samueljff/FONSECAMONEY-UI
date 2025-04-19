@@ -7,6 +7,8 @@ export class LancamentoFiltro {
   descricao?: string;
   dataVencimentoInicio?: Date;
   dataVencimentoFim?: Date;
+  ordenarPor?: string = ''; 
+  ordenacao?: string = '';
   pagina = 0;
   itensPorPagina = 5;
 }
@@ -27,10 +29,11 @@ export class LancamentoService {
     .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
     let params = new HttpParams()
     .set('page', filtro.pagina)
-    .set('size', filtro.itensPorPagina);
+    .set('size', filtro.itensPorPagina)
+    .set('sort', `${filtro.ordenarPor},${filtro.ordenacao}`);  // Adicionando a ordenação;
 
     //semelhante ao if
-    filtro.descricao && (params = params.set('descricao', filtro.descricao));
+    filtro.descricao && (params = params.set('descricao', filtro.descricao));  
     
     if (filtro.dataVencimentoInicio) {
       params = params.set('dataVencimentoDe', this.datePipe.transform(filtro.dataVencimentoInicio, 'yyyy-MM-dd')!);
