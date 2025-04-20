@@ -13,9 +13,6 @@ import { ButtonModule } from "primeng/button";
 import { TableModule } from "primeng/table";
 import { TooltipModule } from "primeng/tooltip";
 import { CalendarModule } from "primeng/calendar";
-import { SelectButtonModule } from "primeng/selectbutton";
-import { DropdownModule } from "primeng/dropdown";
-import { InputNumberModule } from "primeng/inputnumber";
 import { InputMaskModule } from "primeng/inputmask";
 
 @NgModule({

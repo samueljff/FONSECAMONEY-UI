@@ -1,19 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import { LazyLoadEvent } from "primeng/api";
+import { PeopleFilter, PessoaService } from "../pessoa.service";
+import { Pessoa } from "./../pessoa";
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'app-pessoas-pesquisa',
-  templateUrl: './pessoas-pesquisa.component.html',
-  styleUrls: ['./pessoas-pesquisa.component.css']
+  selector: "app-pessoas-pesquisa",
+  templateUrl: "./pessoas-pesquisa.component.html",
+  styleUrls: ["./pessoas-pesquisa.component.css"],
 })
-export class PessoasPesquisaComponent{
+export class PessoasPesquisaComponent implements OnInit {
+  filtro = new PeopleFilter();
+  totalRegistros: number = 0;
+  constructor(private pessoasService: PessoaService) {}
 
-  pessoas = [
-    { nome: 'Manoel Pinheiro', cidade: 'Uberlândia', estado: 'MG', status: true },
-    { nome: 'Sebastião da Silva', cidade: 'São Paulo', estado: 'SP', status: false },
-    { nome: 'Carla Souza', cidade: 'Florianópolis', estado: 'SC', status: true },
-    { nome: 'Luís Pereira', cidade: 'Curitiba', estado: 'PR', status: true },
-    { nome: 'Vilmar Andrade', cidade: 'Rio de Janeiro', estado: 'RJ', status: false },
-    { nome: 'Paula Maria', cidade: 'Uberlândia', estado: 'MG', status: true }
-  ];
+  ngOnInit(): void {
+    this.listarTodas();
+  }
 
+  pessoas: Pessoa[] = [];
+
+  listarTodas(): void {
+    this.pessoasService.listarTodas().then((response) => {
+      this.pessoas = response;
+    });
+  }
+
+  pesquisar(pagina: number = 0): void {
+    this.filtro.pagina = pagina;
+    this.pessoasService.pesquisar(this.filtro).then((resultado) => {
+      this.totalRegistros = resultado.total;
+      this.pessoas = resultado.pessoas;
+    });
+  }
+
+  aoMudarPagina(event: LazyLoadEvent) {
+      const pagina = event!.first! / event!.rows!;
+      if (event.sortField) {
+        this.filtro.ordenarPor = event.sortField;
+        this.filtro.ordenacao = event.sortOrder === 1 ? 'asc' : 'desc';
+      }
+      this.pesquisar(pagina);
+    }
 }

@@ -35,7 +35,6 @@ export class LancamentosPesquisaComponent implements OnInit {
      if (event.sortField) {
       this.filtro.ordenarPor = event.sortField;
       this.filtro.ordenacao = event.sortOrder === 1 ? 'asc' : 'desc';
-      console.log(event);
     }
     this.pesquisar(pagina);
   }
