@@ -46,7 +46,8 @@
         [responsive]="true"
         (onLazyLoad)="aoMudarPagina($event)"
         [sortField]="'pessoa.nome'"
-        [sortOrder]="1">
+        [sortOrder]="1"
+        #tabela>
         <ng-template pTemplate="header">
             <tr>
                 <th>Pessoa</th>
@@ -81,7 +82,12 @@
             </td>
             <td class="col-acoes">
               <a pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"></a>
-              <button pButton icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top"></button>
+              <button pButton 
+                icon="pi pi-trash" 
+                pTooltip="Excluir" t
+                ooltipPosition="top"
+                (click)="excluir(lancamento)">
+              </button>
             </td>
           </tr>
         </ng-template>

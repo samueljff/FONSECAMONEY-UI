@@ -14,7 +14,7 @@ export class PessoasPesquisaComponent implements OnInit {
   constructor(private pessoasService: PessoaService) {}
 
   ngOnInit(): void {
-    this.listarTodas();
+    //this.listarTodas();
   }
 
   pessoas: Pessoa[] = [];
