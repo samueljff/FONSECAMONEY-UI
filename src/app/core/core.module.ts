@@ -10,7 +10,8 @@ import { ErrorHandlerService } from './error-handler.service';
 import { PessoaService } from '../pessoas/pessoa.service';
 import { LancamentoService } from '../lancamentos/lancamento.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
+import { CategoriaService } from '../categorias/categoria.service';
 
 
 registerLocaleData(localePt, 'pt-BR');
@@ -31,6 +32,7 @@ registerLocaleData(localePt, 'pt-BR');
     LancamentoService,
     PessoaService,
     ErrorHandlerService,
+    CategoriaService,
 
     MessageService,
     ToastrService,

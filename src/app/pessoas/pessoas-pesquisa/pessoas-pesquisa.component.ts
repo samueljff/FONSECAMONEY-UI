@@ -1,7 +1,9 @@
-import { LazyLoadEvent } from "primeng/api";
+import { ConfirmationService, LazyLoadEvent, MessageService } from "primeng/api";
 import { PeopleFilter, PessoaService } from "../pessoa.service";
 import { Pessoa } from "./../pessoa";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { ErrorHandlerService } from "src/app/core/error-handler.service";
+import { CategoriaService } from "src/app/categorias/categoria.service";
 
 @Component({
   selector: "app-pessoas-pesquisa",
@@ -11,7 +13,14 @@ import { Component, OnInit } from "@angular/core";
 export class PessoasPesquisaComponent implements OnInit {
   filtro = new PeopleFilter();
   totalRegistros: number = 0;
-  constructor(private pessoasService: PessoaService) {}
+  @ViewChild('tabela') grid: any;
+  constructor(
+    private pessoasService: PessoaService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService,
+    private errorHandlerService: ErrorHandlerService,
+    private cat: CategoriaService
+  ) {}
 
   ngOnInit(): void {
     //this.listarTodas();
@@ -40,5 +49,39 @@ export class PessoasPesquisaComponent implements OnInit {
         this.filtro.ordenacao = event.sortOrder === 1 ? 'asc' : 'desc';
       }
       this.pesquisar(pagina);
+    }
+
+    confirmarExclusao(pessoa: any): void {
+      this.confirmationService.confirm({
+        message: 'Tem certeza que deseja excluir?',
+        accept: () => {
+          this.excluir(pessoa);
+        }
+      });
+    }
+  
+    excluir(pessoa: any){
+      this.pessoasService.excluir(pessoa.codigo)
+      .then(() => {
+        this.grid.reset();
+        this.messageService.add({severity: 'success', detail: 'Pessoa excluída com sucesso!'});
+      }).catch(erro => {
+        this.errorHandlerService.handle(erro);
+      });
+    }
+
+    mudarStatus(pessoa: any): void {
+      const novoStatus = !pessoa.ativo;
+      this.pessoasService.mudarStatus(pessoa.codigo, novoStatus)
+        .then(() => {
+          pessoa.ativo = novoStatus;
+          if(pessoa.ativo){
+            this.messageService.add({severity: 'success', detail: 'Pessoa Ativada com sucesso!'});
+          }else{
+            this.messageService.add({severity: 'success', detail: 'Pessoa Desativada com sucesso!'});
+          }
+        }).catch(erro => {
+          this.errorHandlerService.handle(erro);
+        });
     }
 }

@@ -1,0 +1,9 @@
+.ativo {
+  color: #337ab7;      /* Ou qualquer cor */
+  font-weight: bold;
+}
+
+.inativo {
+  color: red;
+  font-style: italic;
+}
