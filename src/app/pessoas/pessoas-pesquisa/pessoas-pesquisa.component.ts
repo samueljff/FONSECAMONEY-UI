@@ -1,6 +1,6 @@
 import { ConfirmationService, LazyLoadEvent, MessageService } from "primeng/api";
 import { PeopleFilter, PessoaService } from "../pessoa.service";
-import { Pessoa } from "./../pessoa";
+import { Pessoa } from "../pessoaModel";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { ErrorHandlerService } from "src/app/core/error-handler.service";
 import { CategoriaService } from "src/app/categorias/categoria.service";

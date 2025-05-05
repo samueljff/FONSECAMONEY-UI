@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+
+import { MessageService } from 'primeng/api';
+
+import { Pessoa } from '../pessoaModel';
+import { PessoaService } from '../pessoa.service';
+import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 
 @Component({
   selector: 'app-cadastro-pessoa',
@@ -7,9 +14,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CadastroPessoaComponent implements OnInit {
 
-  constructor() { }
+  pessoa = new Pessoa();
+
+  constructor(
+    private pessoaService: PessoaService,
+    private messageService: MessageService,
+    private errorHandlerService: ErrorHandlerService
+  ) { }
 
   ngOnInit(): void {
   }
 
+  salvar(cadastroPessoaForm: NgForm){
+    this.pessoaService.adicionar(this.pessoa)
+      .then(() => {
+        this.messageService.add({severity: 'success', detail: 'Pessoa salva com sucesso!'});
+        cadastroPessoaForm.reset();
+  
+        this.pessoa = new Pessoa();
+      })
+      .catch(error => this.errorHandlerService.handle(error));
+  }
 }

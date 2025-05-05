@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 
 import { CategoriaService } from 'src/app/categorias/categoria.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
-import { Pessoa } from 'src/app/pessoas/pessoa';
+import { Pessoa } from 'src/app/pessoas/pessoaModel';
 import { PessoaService } from 'src/app/pessoas/pessoa.service';
 import { Lancamento } from '../lancamentoModel';
 import { LancamentoService } from '../lancamento.service';

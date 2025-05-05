@@ -1,4 +1,4 @@
-import { Pessoa } from './../pessoa';
+import { Pessoa } from '../pessoaModel';
 import { Component, Input } from '@angular/core';
 
 @Component({

@@ -1,5 +1,5 @@
 import { Categoria } from '../core/model';
-import { Pessoa } from '../pessoas/pessoa';
+import { Pessoa } from '../pessoas/pessoaModel';
 
 export class Lancamento {
     codigo?: number;
