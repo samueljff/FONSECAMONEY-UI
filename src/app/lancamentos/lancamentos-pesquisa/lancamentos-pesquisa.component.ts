@@ -1,4 +1,4 @@
-import { Lancamento } from "./../lancamento";
+import { Lancamento } from "../lancamentoModel";
 import { LancamentoFiltro, LancamentoService } from "../lancamento.service";
 import { ErrorHandlerService } from "src/app/core/error-handler.service";
 

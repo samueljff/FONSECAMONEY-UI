@@ -1,39 +1,38 @@
 <div class="container">
-    <form #lancamentoForm="ngForm" autocomplete="off">
+    <form #lancamentoForm="ngForm" autocomplete="off" (ngSubmit)="salvar(lancamentoForm)">
       <div class="grid">
         <div class="col-12">
           <h1>Novo Lançamento</h1>
         </div>
 
         <div class="col-12">
-          <p-selectButton [options]="tipos" #tipo></p-selectButton>
+          <p-selectButton 
+            [options]="tipos" #tipo name="tipo" [(ngModel)]="lancamento.tipo">
+          </p-selectButton>
         </div>
   
         <div class="col-6 md:col-3 p-fluid">
           <label>Vencimento</label>
-         <p-calendar dateFormat="dd/mm/yy" 
-            [inline]="false" 
-            [readonlyInput]="false" 
-            [showIcon]="false"
-            name="calendario"
-            ngModel #calendario="ngModel"
-            [required]="true">
+          <p-calendar name="vencimento" dateFormat="dd/mm/yy" [inline]="false" [readonlyInput]="false" [showIcon]="false"
+            [(ngModel)]="lancamento.dataVencimento" #vencimento="ngModel" [required]="true">
           </p-calendar>
-          <app-message [control]="calendario" error="required" text="Informe uma Data Válida!"></app-message>
+          <app-message [control]="vencimento" error="required" text="Informe uma Data Válida!"></app-message>
         </div>
+
         <div class="col-6 md:col-3 p-fluid"> 
           <label>{{tipo.value === 'RECEITA' ? 'Recebimento' : 'Pagamento'}}</label>
           <p-calendar 
             dateFormat="dd/mm/yy" 
             name="pagamentoReceita" 
-            ngModel #pagamentoReceita="ngModel" 
+            [(ngModel)]="lancamento.dataPagamento" #pagamentoReceita="ngModel" 
             [required]="true">
           </p-calendar>
           <app-message [control]="pagamentoReceita" error="required" text="Informe uma Data Válida!"></app-message>
         </div>
+        
         <div class="col-12 md:col-9 p-fluid">
           <label>Descrição</label>
-          <input pInputText type="text" name="descricao" ngModel #descricao="ngModel" required minlength="5">
+          <input pInputText type="text" name="descricao" [(ngModel)]="lancamento.descricao" #descricao="ngModel" required minlength="5">
           <app-message [control]="descricao" error="required" text="Informe uma descrição"></app-message>
           <app-message [control]="descricao" error="minlength"
             text="Mínimo de {{ descricao.errors?.minlength?.requiredLength }} caracteres!">
@@ -49,7 +48,7 @@
             locale="pt-BR"
             placeholder="0,00"
             name="valor"
-            ngModel #valor="ngModel"
+            [(ngModel)]="lancamento.valor" #valor="ngModel"
             [required]="true">
           </p-inputNumber>
           <app-message [control]="valor" error="required" text="Informe o valor!"></app-message>
@@ -60,7 +59,7 @@
             [options]="categorias" 
             placeholder="Selecione..." 
             name="categoria"
-            ngModel #categoria="ngModel"
+            [(ngModel)]="lancamento.categoria.codigo" #categoria="ngModel"
             [required]="true">
           </p-dropdown>
           <app-message [control]="categoria" error="required" text="Informe a Categoria!"></app-message>
@@ -72,14 +71,14 @@
             placeholder="Selecione..." 
             [filter]="true"
             name="pessoa"
-            ngModel #pessoa="ngModel"
+            [(ngModel)]="lancamento.pessoa.codigo" #pessoa="ngModel"
             [required]="true">
           </p-dropdown>
           <app-message [control]="pessoa" error="required" text="Informe a Pessoa!"></app-message>
         </div>
         <div class="col-12 p-fluid">
           <label>Observação</label>
-          <textarea pInputTextarea rows="3" class="no-resize"></textarea>
+          <textarea pInputTextarea rows="3" class="no-resize" name="observacao" [(ngModel)]="lancamento.observacao"></textarea>
         </div>
         <div class="col-12 container-link-button">
           <button pButton type="submit" label="Salvar" [disabled]="lancamentoForm.invalid"></button>

@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import '@angular/common/http';
 import { DatePipe } from '@angular/common';
 
+import { Lancamento } from './lancamentoModel';
+
 export class LancamentoFiltro {
   descricao?: string;
   dataVencimentoInicio?: Date;
@@ -23,6 +25,14 @@ export class LancamentoService {
     private http: HttpClient,
     private datePipe: DatePipe
   ) {}
+
+  adicionar(lancamento: Lancamento): Promise<Lancamento> {
+    const headers = new HttpHeaders()
+    .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
+    .append('Content-Type', 'application/json');
+
+    return this.http.post<Lancamento>(this.lancamentosUrl, lancamento, { headers }).toPromise();
+  }
 
   pesquisar(filtro: LancamentoFiltro): Promise<any> {
     const headers = new HttpHeaders()

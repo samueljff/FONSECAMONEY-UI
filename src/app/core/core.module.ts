@@ -35,7 +35,6 @@ registerLocaleData(localePt, 'pt-BR');
     CategoriaService,
 
     MessageService,
-    ToastrService,
     ConfirmationService,
     DatePipe,
     {provide: LOCALE_ID, useValue: 'pt-BR'}

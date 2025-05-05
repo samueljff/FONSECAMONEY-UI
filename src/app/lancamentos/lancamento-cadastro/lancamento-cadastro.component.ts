@@ -1,7 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+
 import { CategoriaService } from 'src/app/categorias/categoria.service';
+import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { Pessoa } from 'src/app/pessoas/pessoa';
 import { PessoaService } from 'src/app/pessoas/pessoa.service';
+import { Lancamento } from '../lancamentoModel';
+import { LancamentoService } from '../lancamento.service';
+
+import { MessageService } from 'primeng/api';
+
 
 @Component({
   selector: 'app-lancamento-cadastro',
@@ -10,9 +18,23 @@ import { PessoaService } from 'src/app/pessoas/pessoa.service';
 })
 export class LancamentoCadastroComponent implements OnInit {
 
+  tipos = [
+    { label: 'Receita', value: 'RECEITA' },
+    { label: 'Despesa', value: 'DESPESA' }, // ← corrigido aqui
+  ];
+  
+  categorias: any[] = [];
+
+  pessoas: Pessoa[] = [];
+
+  lancamento = new Lancamento();
+
   constructor(
     private categoriaService: CategoriaService,
-    private pessoaService: PessoaService
+    private pessoaService: PessoaService,
+    private lancamentoService: LancamentoService,
+    private messageService: MessageService,
+    private errorHandlerService: ErrorHandlerService
   ){}
 
   ngOnInit(): void {
@@ -20,23 +42,24 @@ export class LancamentoCadastroComponent implements OnInit {
       this.carregarPessoas();
   }
 
-  tipos = [
-    {label: 'Receita', value: 'RECEITA'},
-    {label: 'Receita', value: 'DESPESA'},
-  ];
+  salvar(lancamentoForm: NgForm){
+    this.lancamentoService.adicionar(this.lancamento)
+    .then(() => {
+      this.messageService.add({severity: 'success', detail: 'Lancamento salvo com sucesso!'});
+      
+      lancamentoForm.reset();
 
-  categorias: any[] = [];
-
-  pessoas: Pessoa[] = [];
+      this.lancamento = new Lancamento();
+    })
+    .catch(error => this.errorHandlerService.handle(error));
+  }
 
   carregarCategorias() {
     return this.categoriaService.listarTodas()
       .then(response => {
         this.categorias = response.map((c: any) => ({ label: c.nome, value: c.codigo }));
       })
-      .catch(error => {
-        console.error('Erro ao carregar categorias!', error);
-      });
+      .catch(error => this.errorHandlerService.handle(error));
   }
   
   carregarPessoas(){
@@ -45,7 +68,7 @@ export class LancamentoCadastroComponent implements OnInit {
         this.pessoas = response.map((c: any) => ({label: c.nome, value: c.codigo}));
       })
       .catch(error => {
-        console.error('Erro ao carregar pessoas!', error);
+        this.errorHandlerService.handle(error);
       });
   }
 
