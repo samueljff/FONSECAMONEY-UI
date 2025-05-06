@@ -12,6 +12,7 @@ import { LancamentoService } from '../lancamentos/lancamento.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastrService } from 'ngx-toastr';
 import { CategoriaService } from '../categorias/categoria.service';
+import { RouterModule } from '@angular/router';
 
 
 registerLocaleData(localePt, 'pt-BR');
@@ -21,12 +22,13 @@ registerLocaleData(localePt, 'pt-BR');
   imports: [
     CommonModule,
     ToastModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    RouterModule
   ],
   exports: [
     NavbarComponent,
     ToastModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
   ],
   providers: [
     LancamentoService,

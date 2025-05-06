@@ -18,6 +18,7 @@ import { InputTextareaModule } from "primeng/inputtextarea";
 import { DropdownModule } from "primeng/dropdown";
 import { InputNumberModule } from "primeng/inputnumber";
 import { InputMaskModule } from "primeng/inputmask";
+import { RouterModule } from "@angular/router";
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { InputMaskModule } from "primeng/inputmask";
     FormsModule,
     SharedModule,
     BrowserAnimationsModule,
-    InputMaskModule
+    InputMaskModule,
+    RouterModule
   ],
 })
 export class LancamentosModule {}
