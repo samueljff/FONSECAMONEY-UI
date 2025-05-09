@@ -2,7 +2,7 @@
     <form #lancamentoForm="ngForm" autocomplete="off" (ngSubmit)="salvar(lancamentoForm)">
       <div class="grid">
         <div class="col-12">
-          <h1>Novo Lançamento</h1>
+          <h1> {{isEditing ? 'Edição de' : 'Novo'}} Lançamento</h1>
         </div>
 
         <div class="col-12">

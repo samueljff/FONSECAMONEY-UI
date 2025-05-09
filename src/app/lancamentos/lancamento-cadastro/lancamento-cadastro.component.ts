@@ -1,28 +1,27 @@
-import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { CategoriaService } from "src/app/categorias/categoria.service";
+import { ErrorHandlerService } from "src/app/core/error-handler.service";
+import { Pessoa } from "src/app/pessoas/pessoaModel";
+import { PessoaService } from "src/app/pessoas/pessoa.service";
+import { Lancamento } from "../lancamentoModel";
+import { LancamentoService } from "../lancamento.service";
 
-import { CategoriaService } from 'src/app/categorias/categoria.service';
-import { ErrorHandlerService } from 'src/app/core/error-handler.service';
-import { Pessoa } from 'src/app/pessoas/pessoaModel';
-import { PessoaService } from 'src/app/pessoas/pessoa.service';
-import { Lancamento } from '../lancamentoModel';
-import { LancamentoService } from '../lancamento.service';
+import { MessageService } from "primeng/api";
 
-import { MessageService } from 'primeng/api';
-
+import { ActivatedRoute } from "@angular/router";
+import { Component, OnInit } from "@angular/core";
+import { NgForm } from "@angular/forms";
 
 @Component({
-  selector: 'app-lancamento-cadastro',
-  templateUrl: './lancamento-cadastro.component.html',
-  styleUrls: ['./lancamento-cadastro.component.css']
+  selector: "app-lancamento-cadastro",
+  templateUrl: "./lancamento-cadastro.component.html",
+  styleUrls: ["./lancamento-cadastro.component.css"],
 })
 export class LancamentoCadastroComponent implements OnInit {
-
   tipos = [
-    { label: 'Receita', value: 'RECEITA' },
-    { label: 'Despesa', value: 'DESPESA' }, // ← corrigido aqui
+    { label: "Receita", value: "RECEITA" },
+    { label: "Despesa", value: "DESPESA" }, // ← corrigido aqui
   ];
-  
+
   categorias: any[] = [];
 
   pessoas: Pessoa[] = [];
@@ -33,43 +32,93 @@ export class LancamentoCadastroComponent implements OnInit {
     private categoriaService: CategoriaService,
     private pessoaService: PessoaService,
     private lancamentoService: LancamentoService,
+
     private messageService: MessageService,
-    private errorHandlerService: ErrorHandlerService
-  ){}
+    private errorHandlerService: ErrorHandlerService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-      this.carregarCategorias();
-      this.carregarPessoas();
+    const codigoLancamento = this.route.snapshot.params['codigo'];
+
+    if (codigoLancamento && codigoLancamento !== 'novo') {
+      this.carregarLancamento(codigoLancamento)
+    }
+    this.carregarCategorias();
+    this.carregarPessoas();
   }
 
-  salvar(lancamentoForm: NgForm){
-    this.lancamentoService.adicionar(this.lancamento)
-    .then(() => {
-      this.messageService.add({severity: 'success', detail: 'Lancamento salvo com sucesso!'});
-      
-      lancamentoForm.reset();
+  editarLancamento(lancamentoForm: NgForm){
+    this.lancamentoService.atualizarLancamento(this.lancamento)
+      .then((lancamento:  Lancamento)=> {
+        this.lancamento = lancamento;
+        this.messageService.add({
+          severity: "success", detail: "Lancamento alterado com sucesso!",
+        });
+      })
+      .catch((error) => this.errorHandlerService.handle(error));
+  }
 
-      this.lancamento = new Lancamento();
-    })
-    .catch(error => this.errorHandlerService.handle(error));
+  adicionar(lancamentoForm: NgForm){
+    this.lancamentoService
+      .adicionar(this.lancamento)
+      .then(() => {
+        this.messageService.add({
+          severity: "success",
+          detail: "Lancamento salvo com sucesso!",
+        });
+
+        lancamentoForm.reset();
+
+        this.lancamento = new Lancamento();
+      })
+      .catch((error) => this.errorHandlerService.handle(error));
+  }
+
+  salvar(lancamentoForm: NgForm) {
+    if(this.isEditing){
+      this.editarLancamento(lancamentoForm);
+    }else{
+      this.adicionar(lancamentoForm);
+    }
+  }
+
+  carregarLancamento(codigo: number) {
+    this.lancamentoService
+      .pesquisarPorId(codigo)
+      .then((response) => {
+        this.lancamento = response;
+      })
+      .catch((error) => this.errorHandlerService.handle(error));
   }
 
   carregarCategorias() {
-    return this.categoriaService.listarTodas()
-      .then(response => {
-        this.categorias = response.map((c: any) => ({ label: c.nome, value: c.codigo }));
+    return this.categoriaService
+      .listarTodas()
+      .then((response) => {
+        this.categorias = response.map((c: any) => ({
+          label: c.nome,
+          value: c.codigo,
+        }));
       })
-      .catch(error => this.errorHandlerService.handle(error));
+      .catch((error) => this.errorHandlerService.handle(error));
   }
-  
-  carregarPessoas(){
-    return this.pessoaService.listarTodas()
-      .then(response => {
-        this.pessoas = response.map((c: any) => ({label: c.nome, value: c.codigo}));
+
+  carregarPessoas() {
+    return this.pessoaService
+      .listarTodas()
+      .then((response) => {
+        this.pessoas = response.map((c: any) => ({
+          label: c.nome,
+          value: c.codigo,
+        }));
       })
-      .catch(error => {
+      .catch((error) => {
         this.errorHandlerService.handle(error);
       });
   }
-
+  
+  get isEditing (){
+    return Boolean(this.lancamento.codigo);
+  }
 }

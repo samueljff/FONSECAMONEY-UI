@@ -5,6 +5,7 @@ import { DatePipe } from '@angular/common';
 
 import { Lancamento } from './lancamentoModel';
 
+
 export class LancamentoFiltro {
   descricao?: string;
   dataVencimentoInicio?: Date;
@@ -32,6 +33,44 @@ export class LancamentoService {
     .append('Content-Type', 'application/json');
 
     return this.http.post<Lancamento>(this.lancamentosUrl, lancamento, { headers }).toPromise();
+  }
+
+  atualizarLancamento(lancamento: Lancamento): Promise<Lancamento> {
+    const headers = new HttpHeaders()
+      .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
+      .append('Content-Type', 'application/json');
+    return this.http.put<Lancamento>(`${this.lancamentosUrl}/${lancamento.codigo}`, lancamento, { headers })
+    .toPromise()
+    .then((response: any) => {
+      this.converterStringParaDate([response]);
+
+        return response;
+    })
+  }
+
+  pesquisarPorId(codigo: number): Promise<any> {
+    const headers = new HttpHeaders()
+    .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
+    
+    return this.http.get<any>(`${this.lancamentosUrl}/${codigo}`, {headers})
+      .toPromise()
+      .then(response => {
+        this.converterStringParaDate([response]);
+        return response;
+      });
+  }
+
+  private converterStringParaDate(lancamentos: Lancamento[]) {
+    lancamentos.forEach(l => {
+      let offset = new Date().getTimezoneOffset() * 60000;
+      if (l.dataVencimento) {
+        l.dataVencimento = new Date(new Date(l.dataVencimento!).getTime() + offset);
+      }
+  
+      if (l.dataPagamento) {
+        l.dataPagamento = new Date(new Date(l.dataPagamento!).getTime() + offset);
+      }
+    });
   }
 
   pesquisar(filtro: LancamentoFiltro): Promise<any> {

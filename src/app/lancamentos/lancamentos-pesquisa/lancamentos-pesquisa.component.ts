@@ -21,7 +21,7 @@ export class LancamentosPesquisaComponent implements OnInit {
     private lancamentoService: LancamentoService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private errorHandlerservice: ErrorHandlerService
+    private errorHandlerservice: ErrorHandlerService,
   ) {}
 
   ngOnInit(): void {
