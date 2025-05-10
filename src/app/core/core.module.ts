@@ -12,12 +12,13 @@ import { ErrorHandlerService } from './error-handler.service';
 import { PessoaService } from '../pessoas/pessoa.service';
 import { LancamentoService } from '../lancamentos/lancamento.service';
 import { CategoriaService } from '../categorias/categoria.service';
+import { PaginaNaoEcontradaComponent } from './pagina-nao-econtrada.component';
 
 
 registerLocaleData(localePt, 'pt-BR');
 
 @NgModule({
-  declarations: [NavbarComponent],
+  declarations: [NavbarComponent, PaginaNaoEcontradaComponent],
   imports: [
     CommonModule,
     ToastModule,
