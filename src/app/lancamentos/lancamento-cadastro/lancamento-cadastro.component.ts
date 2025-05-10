@@ -7,7 +7,7 @@ import { LancamentoService } from "../lancamento.service";
 
 import { MessageService } from "primeng/api";
 
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import { NgForm } from "@angular/forms";
 
@@ -35,7 +35,8 @@ export class LancamentoCadastroComponent implements OnInit {
 
     private messageService: MessageService,
     private errorHandlerService: ErrorHandlerService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router 
   ) {}
 
   ngOnInit(): void {
@@ -62,15 +63,15 @@ export class LancamentoCadastroComponent implements OnInit {
   adicionar(lancamentoForm: NgForm){
     this.lancamentoService
       .adicionar(this.lancamento)
-      .then(() => {
+      .then((lancamentoAdicionado) => {
         this.messageService.add({
           severity: "success",
           detail: "Lancamento salvo com sucesso!",
         });
 
-        lancamentoForm.reset();
-
-        this.lancamento = new Lancamento();
+        //lancamentoForm.reset();
+        //this.lancamento = new Lancamento();
+        this.router.navigate(['/lancamentos', lancamentoAdicionado.codigo]);
       })
       .catch((error) => this.errorHandlerService.handle(error));
   }
@@ -116,6 +117,15 @@ export class LancamentoCadastroComponent implements OnInit {
       .catch((error) => {
         this.errorHandlerService.handle(error);
       });
+  }
+
+  novo(lancamentoForm: NgForm){
+    
+    lancamentoForm.reset();
+    setTimeout(() =>{
+      this.lancamento = new Lancamento();
+    }, 1);
+    this.router.navigate(['/lancamentos/novo']);
   }
   
   get isEditing (){

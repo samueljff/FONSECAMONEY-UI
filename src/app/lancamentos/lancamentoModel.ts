@@ -3,8 +3,8 @@ import { Pessoa } from '../pessoas/pessoaModel';
 
 export class Lancamento {
     codigo?: number;
-    tipo?: string;
-    descricao = 'RECEITA';
+    tipo = 'RECEITA';
+    descricao?: string;
     dataVencimento?: Date;
     dataPagamento?: Date | null;
     valor?: number;
