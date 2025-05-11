@@ -13,6 +13,7 @@ import { PessoaService } from '../pessoas/pessoa.service';
 import { LancamentoService } from '../lancamentos/lancamento.service';
 import { CategoriaService } from '../categorias/categoria.service';
 import { PaginaNaoEcontradaComponent } from './pagina-nao-econtrada.component';
+import { Title } from '@angular/platform-browser';
 
 
 registerLocaleData(localePt, 'pt-BR');
@@ -39,6 +40,7 @@ registerLocaleData(localePt, 'pt-BR');
     MessageService,
     ConfirmationService,
     DatePipe,
+    Title,
     {provide: LOCALE_ID, useValue: 'pt-BR'}
   ]
 })

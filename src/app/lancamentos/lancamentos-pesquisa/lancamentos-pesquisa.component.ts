@@ -3,6 +3,7 @@ import { LancamentoFiltro, LancamentoService } from "../lancamento.service";
 import { ErrorHandlerService } from "src/app/core/error-handler.service";
 
 import { Component, OnInit, ViewChild } from "@angular/core";
+import { Title } from "@angular/platform-browser";
 
 import { ConfirmationService, LazyLoadEvent, MessageService } from "primeng/api";
 
@@ -22,10 +23,11 @@ export class LancamentosPesquisaComponent implements OnInit {
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private errorHandlerservice: ErrorHandlerService,
+    private title: Title
   ) {}
 
   ngOnInit(): void {
-    //this.pesquisar();
+    this.title.setTitle('Pesquisa de Lançamentos');
   }
 
   pesquisar(pagina: number = 0): void {
