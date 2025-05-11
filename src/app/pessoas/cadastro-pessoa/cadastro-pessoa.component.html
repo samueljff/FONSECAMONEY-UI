@@ -1,8 +1,8 @@
 <div class="container">
-    <form #cadastroPessoaForm="ngForm" autocomplete="off" (ngSubmit)="salvar(cadastroPessoaForm)">
+    <form #cadastroPessoaForm="ngForm" autocomplete="off" (ngSubmit)="salvar()">
         <div class="grid">
             <div class="col-12">
-                <h1>Nova Pessoa</h1>
+                <h1> {{isEditing ? 'Edição de' : 'Nova'}} Pessoa</h1>
             </div>
             <div class="col-12 p-fluid">
                 <label>Nome</label>
@@ -53,9 +53,9 @@
             </div>
             <div class="col-12 container-link-button">
                 <button pButton type="submit" label="Salvar" [disabled]="cadastroPessoaForm.invalid"></button>
-                <button pButton type="button" label="Novo" class="p-button-info"></button>
+                <button pButton type="button" label="Novo" class="p-button-info" (click)="novo(cadastroPessoaForm)"></button>
         
-                <a href="javascript:;">Voltar para a pesquisa</a>
+                <a routerLink="/pessoas" >Voltar para a pesquisa</a>
             </div>
         </div>
     </form>

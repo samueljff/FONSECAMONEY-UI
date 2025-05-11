@@ -3,7 +3,7 @@ import { PeopleFilter, PessoaService } from "../pessoa.service";
 import { Pessoa } from "../pessoaModel";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { ErrorHandlerService } from "src/app/core/error-handler.service";
-import { CategoriaService } from "src/app/categorias/categoria.service";
+import { Title } from "@angular/platform-browser";
 
 @Component({
   selector: "app-pessoas-pesquisa",
@@ -19,11 +19,11 @@ export class PessoasPesquisaComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private errorHandlerService: ErrorHandlerService,
-    private cat: CategoriaService
+    private title: Title
   ) {}
 
   ngOnInit(): void {
-    //this.listarTodas();
+    this.title.setTitle('Pesquisa de Pessoas');
   }
 
   pessoas: Pessoa[] = [];

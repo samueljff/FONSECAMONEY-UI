@@ -65,7 +65,11 @@
                           </td>                          
                         <td class="col-acoes">
                             <span class="p-column-title"></span>
-                            <a pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"></a>
+                            <a pButton icon="pi pi-pencil" 
+                                pTooltip="Editar" 
+                                tooltipPosition="top" 
+                                [routerLink]="['/pessoas', pessoa.codigo]">
+                            </a>
                             <button 
                                 pButton icon="pi pi-trash" 
                                 pTooltip="Excluir" 
@@ -87,7 +91,7 @@
         </div>
 
         <div class="col-12">
-            <a pButton label="Nova Pessoa"></a>
+            <a pButton label="Nova Pessoa" routerLink="/pessoas/nova"></a>
         </div>
     </div>
 </div>

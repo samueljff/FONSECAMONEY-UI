@@ -14,6 +14,7 @@ import { TableModule } from "primeng/table";
 import { TooltipModule } from "primeng/tooltip";
 import { CalendarModule } from "primeng/calendar";
 import { InputMaskModule } from "primeng/inputmask";
+import { PessoasRoutingModule } from "./pessoas-routing.module";
 
 @NgModule({
   declarations: [
@@ -31,7 +32,9 @@ import { InputMaskModule } from "primeng/inputmask";
     BrowserAnimationsModule,
     InputMaskModule,
     FormsModule,
-    SharedModule
+
+    SharedModule,
+    PessoasRoutingModule
   ],
   exports: [
   ],
