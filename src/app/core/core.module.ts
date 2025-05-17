@@ -3,6 +3,7 @@ import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule, DatePipe, registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 import { RouterModule } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -13,7 +14,7 @@ import { PessoaService } from '../pessoas/pessoa.service';
 import { LancamentoService } from '../lancamentos/lancamento.service';
 import { CategoriaService } from '../categorias/categoria.service';
 import { PaginaNaoEcontradaComponent } from './pagina-nao-econtrada.component';
-import { Title } from '@angular/platform-browser';
+import { OauthService } from '../seguranca/oauth.service';
 
 
 registerLocaleData(localePt, 'pt-BR');
@@ -36,6 +37,7 @@ registerLocaleData(localePt, 'pt-BR');
     PessoaService,
     ErrorHandlerService,
     CategoriaService,
+    OauthService,
 
     MessageService,
     ConfirmationService,
