@@ -50,4 +50,9 @@ export class OauthService {
       this.armazenarToken(token);
     }
   }
+
+  haspermission(permission: string){
+    return this.jwtPayload && this.jwtPayload.authorities.includes(permission);
+  }
+
 }
