@@ -31,4 +31,9 @@ export class NavbarComponent implements OnInit {
   haspermission(permission: string){
     return this.auth.haspermission(permission);
   }
+
+   criarNovoAccessToken() {
+    this.auth.obterRefreshToken();
+  }
+
 }
