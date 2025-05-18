@@ -53,28 +53,31 @@
                         </td>
                         <td>
                             <span class="p-column-title">Status</span>
-                            <a
+                            <button pButton
                               href="javascript:void(0)"
                               [pTooltip]="pessoa.ativo ? 'Desativar' : 'Ativar'"
                               tooltipPosition="top"
                               (click)="mudarStatus(pessoa)"
                               [ngClass]="{ 'ativo': pessoa.ativo, 'inativo': !pessoa.ativo }"
+                              [disabled]="naoTemPermissao('ROLE_CADASTRAR_PESSOA')"
                             >
                               {{ pessoa.ativo ? 'Ativo' : 'Inativo' }}
-                            </a>
+                            </button>
                           </td>                          
                         <td class="col-acoes">
                             <span class="p-column-title"></span>
-                            <a pButton icon="pi pi-pencil" 
+                            <button pButton icon="pi pi-pencil" 
                                 pTooltip="Editar" 
                                 tooltipPosition="top" 
-                                [routerLink]="['/pessoas', pessoa.codigo]">
-                            </a>
+                                [routerLink]="['/pessoas', pessoa.codigo]"
+                                [disabled]="naoTemPermissao('ROLE_CADASTRAR_PESSOA')">
+                            </button>
                             <button 
                                 pButton icon="pi pi-trash" 
                                 pTooltip="Excluir" 
                                 tooltipPosition="top"
-                                (click)="confirmarExclusao(pessoa)">
+                                (click)="confirmarExclusao(pessoa)"
+                                [disabled]="naoTemPermissao('ROLE_REMOVER_PESSOA')">
                             </button>
                         </td>
                     </tr>

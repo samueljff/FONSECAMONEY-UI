@@ -4,6 +4,7 @@ import { Pessoa } from "../pessoaModel";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { ErrorHandlerService } from "src/app/core/error-handler.service";
 import { Title } from "@angular/platform-browser";
+import { OauthService } from "src/app/seguranca/oauth.service";
 
 @Component({
   selector: "app-pessoas-pesquisa",
@@ -19,7 +20,8 @@ export class PessoasPesquisaComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private errorHandlerService: ErrorHandlerService,
-    private title: Title
+    private title: Title,
+    private auth: OauthService
   ) {}
 
   ngOnInit(): void {
@@ -83,5 +85,8 @@ export class PessoasPesquisaComponent implements OnInit {
         }).catch(erro => {
           this.errorHandlerService.handle(erro);
         });
+    }
+    naoTemPermissao(permissao: string) {
+      return !this.auth.haspermission(permissao);
     }
 }

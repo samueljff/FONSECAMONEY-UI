@@ -15,12 +15,16 @@ import { LancamentoService } from '../lancamentos/lancamento.service';
 import { CategoriaService } from '../categorias/categoria.service';
 import { PaginaNaoEcontradaComponent } from './pagina-nao-econtrada.component';
 import { OauthService } from '../seguranca/oauth.service';
-
+import { NaoAutorizadoComponent } from './nao-autorizado.componente';
 
 registerLocaleData(localePt, 'pt-BR');
 
 @NgModule({
-  declarations: [NavbarComponent, PaginaNaoEcontradaComponent],
+  declarations: [
+    NavbarComponent, 
+    PaginaNaoEcontradaComponent, 
+    NaoAutorizadoComponent
+  ],
   imports: [
     CommonModule,
     ToastModule,
