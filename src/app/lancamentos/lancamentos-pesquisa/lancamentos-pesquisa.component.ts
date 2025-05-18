@@ -6,6 +6,7 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 
 import { ConfirmationService, LazyLoadEvent, MessageService } from "primeng/api";
+import { OauthService } from "src/app/seguranca/oauth.service";
 
 @Component({
   selector: "app-lancamentos-pesquisa",
@@ -23,7 +24,8 @@ export class LancamentosPesquisaComponent implements OnInit {
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private errorHandlerservice: ErrorHandlerService,
-    private title: Title
+    private title: Title,
+    private auth: OauthService
   ) {}
 
   ngOnInit(): void {
@@ -66,6 +68,10 @@ export class LancamentosPesquisaComponent implements OnInit {
     }).catch(erro => {
       this.errorHandlerservice.handle(erro);
     });
+  }
+
+  naoTemPermissao(permissao: string) {
+    return !this.auth.haspermission(permissao);
   }
 
 }
