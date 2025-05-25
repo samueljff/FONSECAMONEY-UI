@@ -1,5 +1,7 @@
 import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { OauthService } from 'src/app/seguranca/oauth.service';
+import { ErrorHandlerService } from '../error-handler.service';
 
 @Component({
   selector: 'app-navbar',
@@ -16,7 +18,9 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     private eRef: ElementRef,
-    private auth: OauthService
+    private auth: OauthService,
+    private router: Router,
+    private errorHandlerService: ErrorHandlerService
   ) {}
 
   // Detecta cliques em qualquer parte do documento
@@ -32,8 +36,11 @@ export class NavbarComponent implements OnInit {
     return this.auth.haspermission(permission);
   }
 
-   criarNovoAccessToken() {
-    this.auth.obterRefreshToken();
+   logout() {
+    this.auth.logout()
+      .then(() => {
+        this.router.navigate(['/login']);
+      })
+      .catch(erro => this.errorHandlerService.handle(erro));
   }
-
 }

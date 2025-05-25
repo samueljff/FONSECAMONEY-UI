@@ -2,14 +2,16 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
+import { environment } from 'src/environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class OauthService {
 
   jwtPayload: any;
-
-  oauthTokenUrl = 'http://localhost:8080/oauth/token';
+   tokensRevokeUrl = environment.apiUrl + '/tokens/revoke';
+  oauthTokenUrl = environment.apiUrl + '/oauth/token';
 
   constructor(
     private http: HttpClient,
@@ -91,6 +93,19 @@ export class OauthService {
     }
 
     return false;
+  }
+
+  limparAccessToken(){
+    localStorage.removeItem('token');
+    this.jwtPayload = null;
+  }
+
+  logout() {
+    return this.http.delete(this.tokensRevokeUrl, { withCredentials: true })
+      .toPromise()
+      .then(() => {
+        this.limparAccessToken();
+      });
   }
 
 }

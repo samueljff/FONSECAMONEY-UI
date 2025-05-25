@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Pessoa } from './pessoaModel';
+import { environment } from 'src/environments/environment';
 
 export class PeopleFilter {
   nome?: string;
@@ -16,12 +17,12 @@ export class PeopleFilter {
 })
 
 export class PessoaService {
-
+  pessoasUrl: string;
+  
   constructor(
     private http: HttpClient
-  ) { }
+  ) { this.pessoasUrl = `${environment.apiUrl}/pessoas`}
 
-  pessoasUrl = 'http://localhost:8080/pessoas';
 
    adicionar(pessoa: Pessoa): Promise<Pessoa> {  
       return this.http.post<Pessoa>(this.pessoasUrl, pessoa).toPromise();

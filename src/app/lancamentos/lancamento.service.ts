@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import '@angular/common/http';
 import { DatePipe } from '@angular/common';
 
+import { environment } from './../../environments/environment';
 import { Lancamento } from './lancamentoModel';
 
 
@@ -20,12 +21,13 @@ export class LancamentoFiltro {
   providedIn: 'root',
 })
 export class LancamentoService {
-  lancamentosUrl = 'http://localhost:8080/lancamentos';
+  
+  lancamentosUrl: string;
 
   constructor(
     private http: HttpClient,
     private datePipe: DatePipe
-  ) {}
+  ) {this.lancamentosUrl = `${environment.apiUrl}/lancamentos`}
 
   adicionar(lancamento: Lancamento): Promise<Lancamento> {
     return this.http.post<Lancamento>(this.lancamentosUrl, lancamento).toPromise();

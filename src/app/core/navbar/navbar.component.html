@@ -14,6 +14,6 @@
         <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="haspermission('ROLE_PESQUISAR_PESSOA')">
             <a routerLink="/pessoas">Pessoas</a>
         </li>
-        <li class="navbar-menuitem"><a href="">Logout </a></li>
+        <li class="navbar-menuitem"><a href="javascript:;" (click)=" logout()">Logout </a></li>
     </ul>
 </nav>
