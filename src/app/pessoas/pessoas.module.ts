@@ -29,7 +29,6 @@ import { PessoasRoutingModule } from "./pessoas-routing.module";
     TableModule,
     TooltipModule,
     CalendarModule,
-    BrowserAnimationsModule,
     InputMaskModule,
     FormsModule,
 

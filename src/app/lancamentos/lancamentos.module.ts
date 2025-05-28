@@ -7,7 +7,6 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { ButtonModule } from "primeng/button";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule } from "@angular/router";
 
 import { TabViewModule } from "primeng/tabview";
@@ -42,10 +41,8 @@ import { InputMaskModule } from "primeng/inputmask";
     DropdownModule,
     InputNumberModule,
     FormsModule,
-    BrowserAnimationsModule,
     InputMaskModule,
     RouterModule,
-
     SharedModule,
     LancamentosRountingModule
   ],
