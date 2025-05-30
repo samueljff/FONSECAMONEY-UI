@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, NgModule } from '@angular/core';
+import { AbstractControl, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-message',
@@ -20,11 +21,11 @@ import { Component, Input, NgModule } from '@angular/core';
 export class MessageComponent {
 
   @Input() error: string = '';
-  @Input() control: any;
+  @Input() control?: AbstractControl | FormControl | null;
   @Input() text: string = '';
 
   temErro(): boolean {
-    return this.control.hasError(this.error) && this.control.dirty;
+     return this.control ? this.control.hasError(this.error) && this.control.dirty : true; 
   }
 
 }

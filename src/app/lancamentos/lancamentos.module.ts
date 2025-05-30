@@ -5,7 +5,7 @@ import { LancamentosRountingModule } from "./lancamento-routing.module";
 
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ButtonModule } from "primeng/button";
 import { RouterModule } from "@angular/router";
 
@@ -43,6 +43,7 @@ import { InputMaskModule } from "primeng/inputmask";
     FormsModule,
     InputMaskModule,
     RouterModule,
+     ReactiveFormsModule,
     SharedModule,
     LancamentosRountingModule
   ],
