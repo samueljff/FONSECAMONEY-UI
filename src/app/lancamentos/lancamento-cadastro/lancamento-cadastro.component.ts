@@ -9,7 +9,7 @@ import { MessageService } from "primeng/api";
 
 import { ActivatedRoute, Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Title } from "@angular/platform-browser";
 
 @Component({
@@ -24,11 +24,7 @@ export class LancamentoCadastroComponent implements OnInit {
   ];
 
   categorias: any[] = [];
-
   pessoas: Pessoa[] = [];
-
- //lancamento = new Lancamento();
-
   formulario!: FormGroup;
 
   constructor(
@@ -61,9 +57,9 @@ export class LancamentoCadastroComponent implements OnInit {
     this.formulario = this.formBuilder.group({
       codigo: [],
       tipo: ['RECEITA', Validators.required],
-      dataVencimento: [null, Validators.required],
+      dataVencimento: [null, this.validarCamposObrigatorios],
       dataPagamento: [],
-      descricao: [null, [Validators.required, Validators.minLength(5)]],
+      descricao: [null, [this.validarCamposObrigatorios, this.validarTamanhoMinimo(5)]],
       valor: [null, Validators.required],
       pessoa: this.formBuilder.group({
         codigo: [null, Validators.required],
@@ -82,7 +78,6 @@ export class LancamentoCadastroComponent implements OnInit {
   editarLancamento(){
     this.lancamentoService.atualizarLancamento(this.formulario.value)
       .then((lancamento:  Lancamento)=> {
-        //this.lancamento = lancamento;
         this.formulario.patchValue(lancamento);
         this.messageService.add({
           severity: "success", detail: "Lancamento alterado com sucesso!",
@@ -99,9 +94,6 @@ export class LancamentoCadastroComponent implements OnInit {
           severity: "success",
           detail: "Lancamento salvo com sucesso!",
         });
-
-        //lancamentoForm.reset();
-        //this.lancamento = new Lancamento();
         this.router.navigate(['/lancamentos', lancamentoAdicionado.codigo]);
       })
       .catch((error) => this.errorHandlerService.handle(error));
@@ -119,7 +111,6 @@ export class LancamentoCadastroComponent implements OnInit {
     this.lancamentoService
       .pesquisarPorId(codigo)
       .then((response) => {
-        //this.lancamento = response;
         this.formulario.patchValue(response);
         this.atualizarTituloEdicao();
       })
@@ -153,13 +144,6 @@ export class LancamentoCadastroComponent implements OnInit {
   }
 
   novo(){
-    
-    /*lancamentoForm.reset();
-    setTimeout(() =>{
-      this.lancamento = new Lancamento();
-    }, 1);
-    this.router.navigate(['/lancamentos/novo']);*/
-
     this.formulario.reset();
     this.formulario.patchValue(new Lancamento())
     this.router.navigate(['lancamentos/novo']);
@@ -172,4 +156,14 @@ export class LancamentoCadastroComponent implements OnInit {
   atualizarTituloEdicao(){
     this.title.setTitle(`Edição de Lancamento: ${this.formulario.get('descricao')?.value}`);
   }
+
+  validarCamposObrigatorios(input: FormControl){
+    return (input.value ? null : {campoObrigatorio: true})
+  }
+
+    validarTamanhoMinimo(valor: number){
+      return (input: FormControl) => {
+        return (!input.value || input.value.length >= valor) ? null : {tamanhoMinimo: {tamanho: valor}}
+      }
+    }
 }

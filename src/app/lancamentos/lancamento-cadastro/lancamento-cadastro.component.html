@@ -21,7 +21,7 @@
             [showIcon]="false"
             formControlName="dataVencimento">
           </p-calendar>
-          <app-message [control]="formulario.get('dataVencimento')" error="required" text="Informe uma Data Válida!"></app-message>
+          <app-message [control]="formulario.get('dataVencimento')" error="campoObrigatorio" text="Informe uma Data Válida!"></app-message>
         </div>
 
         <div class="col-6 md:col-3 p-fluid"> 
@@ -29,18 +29,16 @@
           <p-calendar 
             dateFormat="dd/mm/yy" 
             name="pagamentoReceita" 
-            formControlName="dataPagamento"
-            [required]="true">
+            formControlName="dataPagamento">
           </p-calendar>
-          <app-message [control]="formulario.get('dataPagamento')" error="required" text="Informe uma Data Válida!"></app-message>
         </div>
         
         <div class="col-12 md:col-9 p-fluid">
           <label>Descrição</label>
           <input pInputText type="text" name="descricao" formControlName="descricao">
-          <app-message [control]="formulario.get('descricao')" error="required" text="Informe uma descrição"></app-message>
-          <app-message [control]="formulario.get('descricao')" error="minlength"
-            text="Mínimo de {{ formulario.get('descricao')?.errors?.minlength?.requiredLength }} caracteres!">
+          <app-message [control]="formulario.get('descricao')" error="campoObrigatorio" text="Informe uma descrição"></app-message>
+          <app-message [control]="formulario.get('descricao')" error="tamanhoMinimo"
+            text="Mínimo de {{ formulario.get('descricao')?.errors?.tamanhoMinimo?.tamanho }} caracteres!">
           </app-message>
         </div>
         <div class="col-12 md:col-3 p-fluid">

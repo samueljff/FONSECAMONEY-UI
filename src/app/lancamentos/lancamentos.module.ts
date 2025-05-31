@@ -43,7 +43,7 @@ import { InputMaskModule } from "primeng/inputmask";
     FormsModule,
     InputMaskModule,
     RouterModule,
-     ReactiveFormsModule,
+    ReactiveFormsModule,
     SharedModule,
     LancamentosRountingModule
   ],
