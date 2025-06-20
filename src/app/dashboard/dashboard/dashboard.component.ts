@@ -1,3 +1,4 @@
+import { DecimalPipe } from "@angular/common";
 import { DashboardService } from "./../dashboard.service";
 import { Component, OnInit } from "@angular/core";
 
@@ -10,11 +11,54 @@ export class DashboardComponent implements OnInit {
   pieChartData: any;
   lineChartData: any;
 
-  constructor(private dashboardService: DashboardService) {}
+  constructor(
+    private dashboardService: DashboardService,
+    private decimalPipe: DecimalPipe
+  ) {}
 
   ngOnInit() {
     this.configurarGraficoPizza();
     this.configurarGraficoLine();
+  }
+
+  optionsLine = {
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: (context: any): any => {
+            let label = context.dataset.label || '';
+            let value = context.raw || 0;
+            let formattedValue = this.decimalPipe.transform(value, '1.2-2', 'pt-BR');
+            return `${label}: ${formattedValue}`;
+          }
+        }
+      }
+    },
+    //ADICIONAR: Formatação dos eixos
+    scales: {
+      y: {
+        ticks: {
+          callback: (value: any) => {
+            return 'R$ ' + this.decimalPipe.transform(value, '1.2-2', 'pt-BR');
+          }
+        }
+      }
+    }
+  }
+
+  optionsPie = {
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: (context: any): any => {
+            let label = context.label || '';
+            let value = context.raw || 0;
+            let formattedValue = this.decimalPipe.transform(value, '1.2-2', 'pt-BR');
+            return `${label}: ${formattedValue}`;
+          }
+        }
+      }
+    }
   }
 
   configurarGraficoPizza() {
