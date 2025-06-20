@@ -16,6 +16,7 @@ import { CategoriaService } from '../categorias/categoria.service';
 import { PaginaNaoEcontradaComponent } from './pagina-nao-econtrada.component';
 import { OauthService } from '../seguranca/oauth.service';
 import { NaoAutorizadoComponent } from './nao-autorizado.componente';
+import { DashboardService } from '../dashboard/dashboard.service';
 
 registerLocaleData(localePt, 'pt-BR');
 
@@ -42,6 +43,7 @@ registerLocaleData(localePt, 'pt-BR');
     ErrorHandlerService,
     CategoriaService,
     OauthService,
+    DashboardService,
 
     MessageService,
     ConfirmationService,

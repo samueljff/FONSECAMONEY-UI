@@ -1,3 +1,4 @@
+import { DashboardService } from './../dashboard.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,62 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  pieChartData: any;
+  lineChartData = {
+    labels: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+    datasets: [
+      {
+        label: 'Receitas',
+        data: [4, 10, 18, 5, 1, 20, 3],
+        borderColor: '#3366CC'
+      }, {
+        label: 'Despesas',
+        data: [10, 15, 8, 5, 1, 7, 9],
+        borderColor: '#D62B00'
+      }
+    ]
+  };
 
-  ngOnInit(): void {
+  constructor(private dashboardService: DashboardService) { }
+
+  ngOnInit() {
+    this.configurarGraficoPizza();
+  }
+
+  configurarGraficoPizza() {
+    this.dashboardService.lancamentosPorCategoria()
+      .then(dados => {
+         console.log('Primeiro item:', dados);
+        this.pieChartData = {
+          labels: dados.map(dado => dado.categoria.nome), 
+          datasets: [
+            {
+              data: dados.map(dado => dado.total),
+              backgroundColor: this.gerarCoresDinamicas(dados.length)
+            }
+          ]
+        };
+      });
+  }
+
+  gerarCoresDinamicas(quantidade: number): string[] {
+    const coresPadrao = [
+      '#FF9900', '#109618', '#990099', '#3B3EAC', '#0099C6',
+      '#DD4477', '#3366CC', '#DC3912'
+    ];
+
+    if (quantidade <= coresPadrao.length) {
+      return coresPadrao.slice(0, quantidade);
+    }
+
+    // Expande com cores HSL bem distribuídas
+    const cores = [...coresPadrao];
+    for (let i = coresPadrao.length; i < quantidade; i++) {
+      const matiz = (360 / (quantidade - coresPadrao.length)) * (i - coresPadrao.length);
+      cores.push(`hsl(${matiz + 30}, 65%, 55%)`); // +30 evita conflito com cores existentes
+    }
+    
+    return cores;
   }
 
 }
