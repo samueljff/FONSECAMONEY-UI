@@ -1,17 +1,9 @@
-export class Endereco{
-    logradouro?: string;
-    numero?: number;
-    complemento?: string;
-    bairro?: string;
-    cep?: string;
-    cidade?: string;
-    estado?: string;
-        
-}
+import { Contato, Endereco } from "../core/model";
 
 export class Pessoa {
     codigo?: number;
     nome?: string;
     endereco = new Endereco();
+    contatos = Array<Contato>();
     ativo = true;
 }
