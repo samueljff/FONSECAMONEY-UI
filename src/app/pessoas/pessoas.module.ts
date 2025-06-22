@@ -17,12 +17,14 @@ import { InputMaskModule } from "primeng/inputmask";
 import { PessoasRoutingModule } from "./pessoas-routing.module";
 import { PanelModule } from "primeng/panel";
 import { DialogModule } from 'primeng/dialog';
+import { PessoaCadastroContatoComponent } from './pessoa-cadastro-contato/pessoa-cadastro-contato.component';
 
 @NgModule({
   declarations: [
     CadastroPessoaComponent,
     PessoasGridComponent,
     PessoasPesquisaComponent,
+    PessoaCadastroContatoComponent,
   ],
   imports: [
     CommonModule,

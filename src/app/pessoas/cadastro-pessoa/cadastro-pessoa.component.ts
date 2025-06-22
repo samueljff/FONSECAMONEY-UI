@@ -17,9 +17,6 @@ import { Contato } from "src/app/core/model";
 })
 export class CadastroPessoaComponent implements OnInit {
   pessoa = new Pessoa();
-  exbindoFormularioContato = false;
-  contato?: Contato;
-  contatoIndex?: number;
 
   constructor(
     private pessoaService: PessoaService,
@@ -96,32 +93,6 @@ export class CadastroPessoaComponent implements OnInit {
 
   atualizarTituloEdicao() {
     this.title.setTitle(`Edição de Pessoa: ${this.pessoa.nome}`);
-  }
-
-  prepararNovoContato() {
-    this.exbindoFormularioContato = true;
-    this.contato = new Contato();
-    this.contatoIndex = this.pessoa.contatos.length;
-  }
-
-  confirmarContato(frm: NgForm) {
-    this.pessoa.contatos[this.contatoIndex!] = this.clonarContato(this.contato!);
-    this.exbindoFormularioContato = false;
-    frm.reset();
-  }
-
-   clonarContato(contato: Contato): Contato {
-    return new Contato(contato.codigo, contato.nome, contato.email, contato.telefone);
-  }
-
-  prepararEdicaoContato(contato: Contato, index: number) {
-    this.contato = this.clonarContato(contato);
-    this.exbindoFormularioContato = true;
-    this.contatoIndex = index;
-  }
-
-   removerContato(index: number) {
-    this.pessoa.contatos.splice(index, 1);
   }
 
 }
