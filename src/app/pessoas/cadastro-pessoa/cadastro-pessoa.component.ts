@@ -103,7 +103,7 @@ export class CadastroPessoaComponent implements OnInit {
     this.contato = new Contato();
     this.contatoIndex = this.pessoa.contatos.length;
   }
-  
+
   confirmarContato(frm: NgForm) {
     this.pessoa.contatos[this.contatoIndex!] = this.clonarContato(this.contato!);
     this.exbindoFormularioContato = false;
@@ -119,4 +119,9 @@ export class CadastroPessoaComponent implements OnInit {
     this.exbindoFormularioContato = true;
     this.contatoIndex = index;
   }
+
+   removerContato(index: number) {
+    this.pessoa.contatos.splice(index, 1);
+  }
+
 }
