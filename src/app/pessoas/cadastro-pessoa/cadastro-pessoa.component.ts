@@ -17,6 +17,8 @@ import { Title } from "@angular/platform-browser";
 export class CadastroPessoaComponent implements OnInit {
   pessoa = new Pessoa();
 
+  exbindoFormularioContato = false;
+
   constructor(
     private pessoaService: PessoaService,
     private messageService: MessageService,
@@ -91,4 +93,9 @@ export class CadastroPessoaComponent implements OnInit {
   atualizarTituloEdicao(){
     this.title.setTitle(`Edição de Pessoa: ${this.pessoa.nome}`);
   }
+
+   prepararNovoContato() {
+    this.exbindoFormularioContato = true;
+  }
+  
 }

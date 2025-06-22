@@ -16,6 +16,7 @@ import { CalendarModule } from "primeng/calendar";
 import { InputMaskModule } from "primeng/inputmask";
 import { PessoasRoutingModule } from "./pessoas-routing.module";
 import { PanelModule } from "primeng/panel";
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { PanelModule } from "primeng/panel";
     InputMaskModule,
     FormsModule,
     PanelModule,
+    DialogModule,
 
     SharedModule,
     PessoasRoutingModule
