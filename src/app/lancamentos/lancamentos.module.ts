@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ButtonModule } from "primeng/button";
 import { RouterModule } from "@angular/router";
 
+import { FileUploadModule } from 'primeng/fileupload';
 import { TabViewModule } from "primeng/tabview";
 import { TableModule } from "primeng/table";
 import { TooltipModule } from "primeng/tooltip";
@@ -44,6 +45,8 @@ import { InputMaskModule } from "primeng/inputmask";
     InputMaskModule,
     RouterModule,
     ReactiveFormsModule,
+    FileUploadModule,
+
     SharedModule,
     LancamentosRountingModule
   ],

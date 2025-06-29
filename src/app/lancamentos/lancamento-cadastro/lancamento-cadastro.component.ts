@@ -9,7 +9,12 @@ import { MessageService } from "primeng/api";
 
 import { ActivatedRoute, Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
 import { Title } from "@angular/platform-browser";
 
 @Component({
@@ -41,68 +46,72 @@ export class LancamentoCadastroComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const codigoLancamento = this.route.snapshot.params['codigo'];
+    const codigoLancamento = this.route.snapshot.params["codigo"];
 
-    this.title.setTitle('Novo Lançamento');
+    this.title.setTitle("Novo Lançamento");
     this.configurarFormulario();
 
-    if (codigoLancamento && codigoLancamento !== 'novo') {
-      this.carregarLancamento(codigoLancamento)
+    if (codigoLancamento && codigoLancamento !== "novo") {
+      this.carregarLancamento(codigoLancamento);
     }
     this.carregarCategorias();
     this.carregarPessoas();
   }
 
-  configurarFormulario(){
+  configurarFormulario() {
     this.formulario = this.formBuilder.group({
       codigo: [],
-      tipo: ['RECEITA', Validators.required],
+      tipo: ["RECEITA", Validators.required],
       dataVencimento: [null, this.validarCamposObrigatorios],
       dataPagamento: [],
-      descricao: [null, [this.validarCamposObrigatorios, this.validarTamanhoMinimo(5)]],
+      descricao: [
+        null,
+        [this.validarCamposObrigatorios, this.validarTamanhoMinimo(5)],
+      ],
       valor: [null, Validators.required],
       pessoa: this.formBuilder.group({
         codigo: [null, Validators.required],
-        nome: []
-
+        nome: [],
       }),
       categoria: this.formBuilder.group({
         codigo: [null, Validators.required],
-        nome: []
-
+        nome: [],
       }),
-      observacao: []
+      observacao: [],
     });
   }
 
-  editarLancamento(){
-    this.lancamentoService.atualizarLancamento(this.formulario.value)
-      .then((lancamento:  Lancamento)=> {
+  editarLancamento() {
+    this.lancamentoService
+      .atualizarLancamento(this.formulario.value)
+      .then((lancamento: Lancamento) => {
         this.formulario.patchValue(lancamento);
         this.messageService.add({
-          severity: "success", detail: "Lancamento alterado com sucesso!",
+          severity: "success",
+          detail: "Lancamento alterado com sucesso!",
         });
         this.atualizarTituloEdicao();
       })
       .catch((error) => this.errorHandlerService.handle(error));
   }
 
-  adicionar(){
-    this.lancamentoService.adicionar(this.formulario.value)
+  adicionar() {
+    this.lancamentoService
+      .adicionar(this.formulario.value)
       .then((lancamentoAdicionado) => {
         this.messageService.add({
           severity: "success",
           detail: "Lancamento salvo com sucesso!",
         });
-        this.router.navigate(['/lancamentos', lancamentoAdicionado.codigo]);
+        this.router.navigate(["/lancamentos", lancamentoAdicionado.codigo]);
       })
       .catch((error) => this.errorHandlerService.handle(error));
   }
 
   salvar() {
-    if(this.isEditing){
+    if (this.isEditing) {
       this.editarLancamento();
-    }else{
+    } else {
       this.adicionar();
     }
   }
@@ -143,27 +152,40 @@ export class LancamentoCadastroComponent implements OnInit {
       });
   }
 
-  novo(){
+  novo() {
     this.formulario.reset();
-    this.formulario.patchValue(new Lancamento())
-    this.router.navigate(['lancamentos/novo']);
+    this.formulario.patchValue(new Lancamento());
+    this.router.navigate(["lancamentos/novo"]);
+  }
+
+  get isEditing() {
+    return Boolean(this.formulario!.get("codigo")?.value);
+  }
+
+  atualizarTituloEdicao() {
+    this.title.setTitle(
+      `Edição de Lancamento: ${this.formulario.get("descricao")?.value}`
+    );
+  }
+
+  validarCamposObrigatorios(input: FormControl) {
+    return input.value ? null : { campoObrigatorio: true };
+  }
+
+  validarTamanhoMinimo(valor: number) {
+    return (input: FormControl) => {
+      return !input.value || input.value.length >= valor
+        ? null
+        : { tamanhoMinimo: { tamanho: valor } };
+    };
+  }
+
+  get uploadHeaders() {
+    return this.lancamentoService.uploadHeaders();
+  }
+
+  get urlUploadAnexo() {
+    return this.lancamentoService.urlUploadAnexo();
   }
   
-  get isEditing (){
-    return Boolean(this.formulario!.get('codigo')?.value)
-  }
-
-  atualizarTituloEdicao(){
-    this.title.setTitle(`Edição de Lancamento: ${this.formulario.get('descricao')?.value}`);
-  }
-
-  validarCamposObrigatorios(input: FormControl){
-    return (input.value ? null : {campoObrigatorio: true})
-  }
-
-    validarTamanhoMinimo(valor: number){
-      return (input: FormControl) => {
-        return (!input.value || input.value.length >= valor) ? null : {tamanhoMinimo: {tamanho: valor}}
-      }
-    }
 }
