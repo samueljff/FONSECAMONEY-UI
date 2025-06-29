@@ -208,5 +208,9 @@ export class LancamentoCadastroComponent implements OnInit {
       urlAnexo: anexo.url.replace('\\\\', 'https://')
     });
   }
+
+   erroUpload(event: any) {
+    this.messageService.add({ severity: 'error', detail: 'Erro ao tentar enviar anexo!' });
+  }
   
 }
