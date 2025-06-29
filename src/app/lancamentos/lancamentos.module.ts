@@ -20,6 +20,7 @@ import { InputTextareaModule } from "primeng/inputtextarea";
 import { DropdownModule } from "primeng/dropdown";
 import { InputNumberModule } from "primeng/inputnumber";
 import { InputMaskModule } from "primeng/inputmask";
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import { InputMaskModule } from "primeng/inputmask";
     RouterModule,
     ReactiveFormsModule,
     FileUploadModule,
+    ProgressSpinnerModule,
 
     SharedModule,
     LancamentosRountingModule
