@@ -121,13 +121,18 @@ export class LancamentoCadastroComponent implements OnInit {
   }
 
   carregarLancamento(codigo: number) {
-    this.lancamentoService
-      .pesquisarPorId(codigo)
-      .then((response) => {
-        this.formulario.patchValue(response);
-        this.atualizarTituloEdicao();
-      })
-      .catch((error) => this.errorHandlerService.handle(error));
+    this.lancamentoService.pesquisarPorId(codigo)
+      .then(lancamento => {
+        this.formulario.patchValue(lancamento)
+
+        if (this.formulario.get('urlAnexo')?.value)
+          this.formulario.patchValue({
+            urlAnexo: this.formulario.get('urlAnexo')?.value.replace('\\\\', 'https://')
+          });
+
+        this.atualizarTituloEdicao()
+      },
+        erro => this.errorHandlerService.handle(erro));
   }
 
   carregarCategorias() {
@@ -221,5 +226,12 @@ export class LancamentoCadastroComponent implements OnInit {
       severity: "error", detail: "Erro ao tentar enviar anexo!",
     });
     this.uploadEmAndamento = false;
+  }
+
+  removerAnexo() {
+    this.formulario.patchValue({
+      anexo: null,
+      urlAnexo: null
+    });
   }
 }
