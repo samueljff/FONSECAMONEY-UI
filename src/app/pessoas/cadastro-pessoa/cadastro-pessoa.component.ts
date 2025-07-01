@@ -8,7 +8,7 @@ import { PessoaService } from "../pessoa.service";
 import { ErrorHandlerService } from "src/app/core/error-handler.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Title } from "@angular/platform-browser";
-import { Contato } from "src/app/core/model";
+import { Contato, Estado } from "src/app/core/model";
 
 @Component({
   selector: "app-cadastro-pessoa",
@@ -17,6 +17,9 @@ import { Contato } from "src/app/core/model";
 })
 export class CadastroPessoaComponent implements OnInit {
   pessoa = new Pessoa();
+  estados: any[] = [];
+  cidades: any[] = [];
+  estadoSelecionado?: number;
 
   constructor(
     private pessoaService: PessoaService,
@@ -29,6 +32,7 @@ export class CadastroPessoaComponent implements OnInit {
 
   ngOnInit(): void {
     this.title.setTitle("Nova Pessoa");
+    this.carregarEstados();
     const codigoPessoa = this.route.snapshot.params["codigo"];
     if (codigoPessoa && codigoPessoa !== "novo") {
       this.carregarPessoa(codigoPessoa);
@@ -85,6 +89,20 @@ export class CadastroPessoaComponent implements OnInit {
         this.atualizarTituloEdicao();
       })
       .catch((error) => this.errorHandlerService.handle(error));
+  }
+
+   carregarEstados() {
+    this.pessoaService.listarEstados().then(lista => {
+      this.estados = lista.map(uf => ({ label: uf.nome, value: uf.codigo }));
+    })
+      .catch(erro => this.errorHandlerService.handle(erro));
+  }
+
+   carregarCidades() {
+    this.pessoaService.pesquisarCidades(this.estadoSelecionado!).then(lista => {
+      this.cidades = lista.map(c => ({ label: c.nome, value: c.codigo }));
+    })
+      .catch(erro => this.errorHandlerService.handle(erro));
   }
 
   get isEditing() {
