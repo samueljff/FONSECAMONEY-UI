@@ -86,6 +86,11 @@ export class CadastroPessoaComponent implements OnInit {
       .pesquisarPorId(codigo)
       .then((response) => {
         this.pessoa = response;
+        this.estadoSelecionado = (this.pessoa.endereco.cidade) ? this.pessoa.endereco.cidade.estado.codigo : undefined;
+        
+        if (this.estadoSelecionado) {
+          this.carregarCidades();
+        }
         this.atualizarTituloEdicao();
       })
       .catch((error) => this.errorHandlerService.handle(error));
@@ -99,10 +104,16 @@ export class CadastroPessoaComponent implements OnInit {
   }
 
    carregarCidades() {
-    this.pessoaService.pesquisarCidades(this.estadoSelecionado!).then(lista => {
-      this.cidades = lista.map(c => ({ label: c.nome, value: c.codigo }));
-    })
-      .catch(erro => this.errorHandlerService.handle(erro));
+    this.pessoaService.pesquisarCidades(this.estadoSelecionado!)
+      .then(cidades => {
+        this.cidades = cidades.map(c => ({
+          label: c.nome,
+          value: c.codigo
+        }));
+        if (this.estadoSelecionado !== this.pessoa.endereco.cidade.estado.codigo)
+          this.pessoa.endereco.cidade.codigo = undefined;
+      })
+      .catch((erro: any) => this.errorHandlerService.handle(erro));
   }
 
   get isEditing() {
