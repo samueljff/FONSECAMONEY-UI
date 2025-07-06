@@ -13,7 +13,7 @@ export class AppComponent {
     private router: Router
   ) { }
 
-  exibindoNavbar() {
+  /*exibindoNavbar() {
     return this.router.url !== '/login';
-  }
+  }*/
 }

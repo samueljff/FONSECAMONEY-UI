@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+/*import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { OauthService } from '../oauth.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
@@ -20,6 +20,7 @@ export class LoginFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.title.setTitle('Login');
+    this.oauthService.login();
   }
 
   login(usuario: string, senha: string) {
@@ -31,4 +32,4 @@ export class LoginFormComponent implements OnInit {
       this.errorHandlerService.handle(erro);
     })
   }
-}
+}*/

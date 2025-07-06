@@ -6,5 +6,6 @@ export const environment = {
 
   apiUrl: 'http://localhost:8080',
   tokenAllowedDomains: [/localhost:8080/],
-  tokenDisallowedRoutes: [/\/oauth\/token/],
+  tokenDisallowedRoutes: [/\/oauth2\/token/],
+  oauthCallbackUrl: 'https://oidcdebugger.com/debug'
 };

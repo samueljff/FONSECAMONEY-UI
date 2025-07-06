@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { NotAuthenticatedError } from '../seguranca/money-http-interceptor';
 import { Router } from '@angular/router';
+import { OauthService } from '../seguranca/oauth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ export class ErrorHandlerService {
 
   constructor(
     private messageService: MessageService,
+    private authService: OauthService,
     private router: Router
   ) { }
 
@@ -24,7 +26,8 @@ export class ErrorHandlerService {
       console.log('erro refresh');
 
       msg = 'Sua sessão expirou!';
-      this.router.navigate(['/login']);
+      this.authService.login();
+      //this.router.navigate(['/login']);
 
     }else if (errorResponse instanceof HttpErrorResponse
         && errorResponse.status >= 400 && errorResponse.status <= 499) {
