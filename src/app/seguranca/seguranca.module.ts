@@ -7,7 +7,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 
-//import { LoginFormComponent } from './login-form/login-form.component';
 import { SegurancaRoutingModule } from './seguranca-routing.module';
 import { MoneyHttpInterceptor } from './money-http-interceptor';
 import { AuthGuard } from './auth.guard';
@@ -18,9 +17,6 @@ export function tokenGetter(): string {
 }
 
 @NgModule({
-  /*declarations: [
-    LoginFormComponent
-  ],*/
   imports: [
     CommonModule,
     FormsModule,

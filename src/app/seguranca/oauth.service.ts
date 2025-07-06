@@ -2,6 +2,8 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { JwtHelperService } from "@auth0/angular-jwt";
 
+import * as CryptoJS from "crypto-js";
+
 import { environment } from "src/environments/environment";
 
 @Injectable({
@@ -11,56 +13,43 @@ export class OauthService {
   jwtPayload: any;
   tokensRevokeUrl = environment.apiUrl + "/tokens/revoke";
   oauthTokenUrl = environment.apiUrl + "/oauth2/token";
-  oauthAuthorizeUrl = environment.apiUrl + "/oauth2/authorize"; 
+  oauthAuthorizeUrl = environment.apiUrl + "/oauth2/authorize";
 
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {
     this.carregarToken();
   }
 
-  /*login(usuario: string, senha: string): Promise<void> {
-    const headers = new HttpHeaders()
-      .append('Content-Type', 'application/x-www-form-urlencoded')
-      .append('Authorization', 'Basic YW5ndWxhcjpAbmd1bEByMA==');
-
-    const body = `username=${usuario}&password=${senha}&grant_type=password`;
-
-    return this.http.post(this.oauthTokenUrl, body, { headers, withCredentials: true })
-      .toPromise()
-      .then((response: any) => {
-        this.armazenarToken(response.access_token);
-        //this.armazenarToken(response['access_token']);
-      })
-      .catch(response => {
-        if(response.status === 400){
-          if(response.error.error === 'invalid_grant'){
-            return Promise.reject('Usuário ou senha inválida!');
-          }
-        }
-        return Promise.reject(response);
-      });
-  }*/
-
   login() {
-    const state = 'abc';
-    const challengeMethod = 'plain'
-    const codeChallenge = 'desafio123'
+    const state = this.gerarStringAleatoria(40);
+    const codeVerifier = this.gerarStringAleatoria(128);
+
+    localStorage.setItem('state', state);
+    localStorage.setItem('codeVerifier', codeVerifier);
+
+    const challengeMethod = "S256";
+    const codeChallenge = CryptoJS.SHA256(codeVerifier)
+      .toString(CryptoJS.enc.Base64)
+      .replace(/\+/g, "-")
+      .replace(/\//g, "_")
+      .replace(/=+$/, "");
+
     const redirectURI = encodeURIComponent(environment.oauthCallbackUrl);
 
-    const clientId = 'angular'
-    const scope = 'read write'
-    const responseType = 'code'
+    const clientId = "angular";
+    const scope = "read write";
+    const responseType = "code";
 
     const params = [
-      'response_type=' + responseType,
-      'client_id=' + clientId,
-      'scope=' + scope,
-      'code_challenge=' + codeChallenge,
-      'code_challenge_method=' + challengeMethod,
-      'state=' + state,
-      'redirect_uri=' + redirectURI 
-    ]
+      "response_type=" + responseType,
+      "client_id=" + clientId,
+      "scope=" + scope,
+      "code_challenge=" + codeChallenge,
+      "code_challenge_method=" + challengeMethod,
+      "state=" + state,
+      "redirect_uri=" + redirectURI,
+    ];
 
-    window.location.href = this.oauthAuthorizeUrl + '?' +  params.join('&');
+    window.location.href = this.oauthAuthorizeUrl + "?" + params.join("&");
   }
 
   public armazenarToken(token: string) {
@@ -87,7 +76,6 @@ export class OauthService {
       .post<any>(this.oauthTokenUrl, body, { headers, withCredentials: true })
       .toPromise()
       .then((response: any) => {
-        //this.armazenarToken(response['access_token']);
         this.armazenarToken(response.access_token);
         console.log("Novo access token criado!");
 
@@ -130,5 +118,15 @@ export class OauthService {
       .then(() => {
         this.limparAccessToken();
       });
+  }
+
+  private gerarStringAleatoria(tamanho: number) {
+    let resultado = "";
+    //Chars que são URL safe
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    for (let i = 0; i < tamanho; i++) {
+      resultado += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return resultado;
   }
 }
