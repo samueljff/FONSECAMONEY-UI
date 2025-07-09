@@ -11,7 +11,6 @@ import { environment } from "src/environments/environment";
 })
 export class OauthService {
   jwtPayload: any;
-  tokensRevokeUrl = environment.apiUrl + "/tokens/revoke";
   oauthTokenUrl = environment.apiUrl + "/oauth2/token";
   oauthAuthorizeUrl = environment.apiUrl + "/oauth2/authorize";
 
@@ -156,15 +155,6 @@ export class OauthService {
     localStorage.setItem('refreshToken', refreshToken);
   }
 
-  logout() {
-    return this.http
-      .delete(this.tokensRevokeUrl, { withCredentials: true })
-      .toPromise()
-      .then(() => {
-        this.limparAccessToken();
-      });
-  }
-
   private gerarStringAleatoria(tamanho: number) {
     let resultado = "";
     //Chars que são URL safe
@@ -173,5 +163,11 @@ export class OauthService {
       resultado += chars.charAt(Math.floor(Math.random() * chars.length));
     }
     return resultado;
+  }
+
+   logout() {
+    this.limparAccessToken();
+    localStorage.clear();
+    window.location.href = environment.apiUrl + '/logout?returnTo=' + environment.logoutRedirectToUrl;
   }
 }
